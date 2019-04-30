@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create({
-  baseURL: '127.0.0.1:3000',
+  baseURL: 'http://localhost:3001',
   headers: {
     common: {
       'Content-Type': 'application/json',
@@ -9,7 +9,17 @@ const client = axios.create({
   },
 });
 
-export const getCount = async () => {
-  const result = await client.get('/');
+export const getAuctions = async () => {
+  const result = await client.get('/auctions');
+  return result.data;
+};
+
+export const bid = async (itemName: string, price: number, bidder: string) => {
+  const result = await client.put(
+    `/auctions/${itemName}`, {
+      action: 'bid',
+      price,
+      bidder,
+    });
   return result.data;
 };

@@ -26,13 +26,16 @@ export class Item {
 
   public setBid(price: number, bidder: User, time: number): boolean {
     if (price <= this.currentPrice) {
+      console.log('Price is too low');
       return false;
     }
     if (time > this.expiry) {
+      console.log('Auction Expired');
       return false;
     }
     this.currentPrice = price;
     this.highestBidder = bidder;
+    this.bids ++;
     return true;
   }
 
@@ -44,14 +47,15 @@ export class Item {
         this.status = 'unsold';
       }
     }
-    const { name, status, expiry, highestBidder, currentPrice, creator } = this;
+    const { name, status, expiry, highestBidder, currentPrice, creator, bids } = this;
     return {
       name,
       status,
       currentPrice,
       expiry,
       highestBidder,
-      creator
+      creator,
+      bids
     };
   }
 

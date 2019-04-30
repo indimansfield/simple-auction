@@ -14,14 +14,15 @@ const users = {
   herc: new User('herc')
 };
 
+
 const items: {
   [key: string]: Item
 } = {
-  'paperclip': new Item('paperclip', 1, dateInSeconds() + 600, users.bunk),
-  'phone': new Item('phone', 9000, dateInSeconds() + 3000, users.kima),
+  'paperclip': new Item('paperclip', 1, dateInSeconds() + 60, users.bunk),
+  'phone': new Item('phone', 9000, dateInSeconds() + 300, users.kima),
   'air': new Item('air', 20000, dateInSeconds() + 90, users.herc),
-  'sandwich': new Item('sandwich', 499, dateInSeconds() + 975, users.kima),
-  'bubble gum': new Item('bubble gum', 795, dateInSeconds() + 3000, users.kima),
+  'sandwich': new Item('sandwich', 499, dateInSeconds() + 93, users.kima),
+  'bubble gum': new Item('bubble gum', 795, dateInSeconds() + 492, users.kima),
 };
 
 app.post('/auctions', (req: Request, res: Response) => {
