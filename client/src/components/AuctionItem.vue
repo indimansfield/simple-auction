@@ -31,12 +31,14 @@
     <div
       v-if="status === 'running'" 
       class="auction-item-submit cell" >
-      <md-field>
-        <label>Price</label>
+      <md-field v-bind:class="{'md-invalid': !priceInputValid}">
+        <label>Bid</label>
         <span class="md-prefix">$</span>
-        <md-input v-model="bidPrice"></md-input>
+        <md-input v-model="bidPrice" placeholder="Enter Bid"></md-input>
+        <span v-if="error === 'bidInvalid'" class="md-error">Bid Input Invalid</span>
+        <span v-if="error === 'bidLow'" class="md-error">Bid Lower than Current Price</span>
       </md-field>
-      <md-button class="md-raised md-primary" @click="onBidClicked">
+      <md-button class="md-raised md-primary" @click="onBidClicked" :disabled="!priceInputValid">
         Place Bid
       </md-button>
     </div>
@@ -62,15 +64,19 @@ export default class AuctionItem extends Vue {
   @Prop() private bids!: number;
   @Prop() private status!: string;
 
-  private bidPrice: number = 0;
+  private bidPrice: number | null = null;
   private expiresIn: string = this.secondsToTimeFormat(this.getDistance());
 
+  private error: 'bidInvalid' | 'bidLow' | '' = '';
+
   private mounted() {
-    setInterval(() => {
+
+    const interval = setInterval(() => {
       const distance = this.getDistance();
-      if (distance === 0) {
+      if (distance === 0 && this.status === 'running') {
         this.$emit('expiry');
-        clearInterval();
+      } else if (this.status !== 'running') {
+        clearInterval(interval);
       } else {
         this.expiresIn = this.secondsToTimeFormat(distance);
       }
@@ -92,6 +98,30 @@ export default class AuctionItem extends Vue {
     });
   }
 
+
+
+  get priceInputValid() {
+    if (this.bidPrice === null) {
+      this.error = '';
+      return;
+    }
+    if (isNaN(this.bidPrice)) {
+      this.error = 'bidInvalid';
+      return false;
+    }
+    if (this.bidPrice < 0) {
+      this.error = 'bidInvalid';
+      return false;
+
+    }
+    if ((this.bidPrice * 100) < this.price) {
+      this.error = 'bidLow';
+      return false;
+    }
+    this.error = '';
+    return true;
+  }
+
   private getDistance() {
     let distance = (this.expiry * 1000) - Date.now();
     if (distance < 0) {
@@ -105,6 +135,9 @@ export default class AuctionItem extends Vue {
   }
 
   private onBidClicked() {
+    if (!this.bidPrice) {
+      return;
+    }
     const priceInCents = this.bidPrice * 100;
     this.$emit('bid', priceInCents);
   }

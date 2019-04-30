@@ -3,7 +3,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <h4> User: {{ currentUser }} </h4>
     <md-button @click="setUser('Herc')">herc</md-button>
-    <md-button @click="setUser('Bunk')">bunk</md-button>
+    <md-button @click="setUser('Omar')">Omar</md-button>
     <md-button @click="setUser('Kima')">kima</md-button>
     <h4> Auctions </h4>
     <div class="auction-container" v-for="(item, index) in items" v-bind:key="item.name">
@@ -24,13 +24,11 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
 import AuctionItem from './components/AuctionItem.vue';
-import { getAuctions, bid,getItemStatus } from './api';
+import { getAuctions, bid, getItemStatus } from './api';
 
 @Component({
   components: {
-    HelloWorld,
     AuctionItem,
   },
 })

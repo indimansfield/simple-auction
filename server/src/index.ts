@@ -10,23 +10,33 @@ const port = 3001;
 app.use(json());
 app.use(cors());
 
+/* Hardcoded Users*/
 const users = {
-  Bunk: new User('Bunk'),
+  Omar: new User('Omar'),
   Kima: new User('Kima'),
   Herc: new User('Herc')
 };
 
+// Time to expiry in seconds, adjust for longer or shorter auction durations
+const paperclipExpiry = 30;
+const phoneExpiry = 45;
+const airExpiry = 34;
+const sandwichExpiry = 67;
+const bubblegumExpiry = 492;
 
+// Hardcoded itemss to place bids on
 const items: {
   [key: string]: Item
 } = {
-  'paperclip': new Item('paperclip', 1, dateInSeconds() + 20, users.Bunk),
-  'phone': new Item('phone', 9000, dateInSeconds() + 45, users.Kima),
-  'air': new Item('air', 20000, dateInSeconds() + 30, users.Herc),
-  'sandwich': new Item('sandwich', 499, dateInSeconds() + 27, users.Kima),
-  'bubble gum': new Item('bubble gum', 795, dateInSeconds() + 492, users.Kima),
+  'Paperclip': new Item('Paperclip', 1, dateInSeconds() + paperclipExpiry, users.Omar),
+  'Phone': new Item('Phone', 9000, dateInSeconds() + phoneExpiry, users.Kima),
+  'Air': new Item('Air', 20000, dateInSeconds() + airExpiry, users.Herc),
+  'Sandwich': new Item('Sandwich', 499, dateInSeconds() + sandwichExpiry, users.Kima),
+  'Bubble gum': new Item('Bubble gum', 795, dateInSeconds() + bubblegumExpiry, users.Kima),
 };
 
+
+// App routes
 app.post('/auctions', (req: Request, res: Response) => {
   const {
     userName,

@@ -1,5 +1,6 @@
 import { User } from './user';
 
+/** Item class contains all auction functionality */
 export class Item {
   public name: string;
   public startingPrice: number;
@@ -47,7 +48,7 @@ export class Item {
         this.status = 'unsold';
       }
     }
-    const { name, status, expiry, highestBidder, currentPrice, creator, bids } = this;
+    const { name, status, expiry, highestBidder, currentPrice: currentPrice, creator, bids } = this;
     return {
       name,
       status,
