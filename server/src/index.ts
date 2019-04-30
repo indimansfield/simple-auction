@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import { json } from 'body-parser';
+import cors from 'cors';
 import { Item } from './models/item';
 import { User } from './models/user';
 import { dateInSeconds } from './util';
@@ -7,22 +8,23 @@ import { dateInSeconds } from './util';
 const app = express();
 const port = 3001;
 app.use(json());
+app.use(cors());
 
 const users = {
-  bunk: new User('bunk'),
-  kima: new User('kima'),
-  herc: new User('herc')
+  Bunk: new User('Bunk'),
+  Kima: new User('Kima'),
+  Herc: new User('Herc')
 };
 
 
 const items: {
   [key: string]: Item
 } = {
-  'paperclip': new Item('paperclip', 1, dateInSeconds() + 60, users.bunk),
-  'phone': new Item('phone', 9000, dateInSeconds() + 300, users.kima),
-  'air': new Item('air', 20000, dateInSeconds() + 90, users.herc),
-  'sandwich': new Item('sandwich', 499, dateInSeconds() + 93, users.kima),
-  'bubble gum': new Item('bubble gum', 795, dateInSeconds() + 492, users.kima),
+  'paperclip': new Item('paperclip', 1, dateInSeconds() + 20, users.Bunk),
+  'phone': new Item('phone', 9000, dateInSeconds() + 45, users.Kima),
+  'air': new Item('air', 20000, dateInSeconds() + 30, users.Herc),
+  'sandwich': new Item('sandwich', 499, dateInSeconds() + 27, users.Kima),
+  'bubble gum': new Item('bubble gum', 795, dateInSeconds() + 492, users.Kima),
 };
 
 app.post('/auctions', (req: Request, res: Response) => {
@@ -45,10 +47,11 @@ app.get('/auctions/:name/status', (req: Request, res: Response) => {
 });
 
 app.get('/auctions', (req: Request, res: Response) => {
-  res.status(200).send(Object.values(items).map((item: Item) => item.getStatus(122)));
+  res.status(200).send(Object.values(items).map((item: Item) => item.getStatus(dateInSeconds())));
 });
 
 app.put('/auctions/:name/', (req: Request, res: Response) => {
+  console.log(`Bid on ${req.params.name}`);
   const item = items[req.params.name];
   if (!item) {
     return res.status(404).send('Item not found');
