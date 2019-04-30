@@ -1,0 +1,29 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Server Implementation of EdApp Developer Test",
+  "main": "index.js",
+  "author": "Indi Mansfield",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/jest": "^24.0.12",
+    "@types/node": "^11.13.8",
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.1.0",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "scripts": {
+    "start": "npm run build:live",
+    "build": "tsc -p .",
+    "test": "./node_modules/jest/bin/jest.js",
+    "build:live": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4"
+  }
+}
