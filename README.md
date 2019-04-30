@@ -1,5 +1,5 @@
 # Simple Auctions
-Simple Auction Application.
+Simple Auction Application. Written in Typescript, Vue, Node
 Auction items are located in `server/src/index.ts`
 
 To Use:
