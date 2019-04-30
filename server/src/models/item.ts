@@ -59,8 +59,5 @@ export class Item {
       bids
     };
   }
-
-
-
 }
 
