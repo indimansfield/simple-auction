@@ -27,4 +27,5 @@ export const bid = async (itemName: string, price: number, bidder: string) => {
 export const getItemStatus = async (name: string) => {
   const result = await client.get(`/auctions/${name}/status`);
   return result.data;
-}
+};
+
