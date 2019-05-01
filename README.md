@@ -1,6 +1,6 @@
 # Simple Auctions
 Simple Auction Application. Written in Typescript, Vue, Node
-Auction items are located in `server/src/index.ts`
+
 
 To Use:
 * Select User at top of page.
@@ -9,7 +9,8 @@ To Use:
 * All auctions are in memory to Restart auctions just restart the server.
 * To run automated tests:
 * `cd server`
-* `yarn test` 
+* `yarn test`
+* hardcoded data, such as auction items are located in `server/src/index.ts`
 
 
 ### Requirements
